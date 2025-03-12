@@ -18,7 +18,7 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-        'name',
+        'nom',
         'email',
         'password',
         'role',
@@ -29,6 +29,11 @@ class User extends Authenticatable
         'ajoute_par',
         'team',
     ];
+
+
+    public function commandes(){
+        return $this->hasMany(Commande::class);
+    }
 
     /**
      * The attributes that should be hidden for serialization.

@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('status');
             $table->string('name');
             //les clefs etrangers
-            $table->foreignID('service_id');
-            $table->foreignID('user_id');
+            $table->foreignId('service_id')->nullable()->constained('services')->onDelete('cascade');
+            $table->foreignId('user_id')->nullable()->constained('users')->onDelete('cascade');
 
             $table->timestamps();
         });

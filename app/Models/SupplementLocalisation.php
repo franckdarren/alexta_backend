@@ -12,4 +12,7 @@ class SupplementLocalisation extends Model
         'lieu',
         'montant',
     ];
+
+
+
 }

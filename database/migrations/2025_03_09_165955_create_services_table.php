@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('description');
             $table->string('prix_base');
             //les clefs etrangers 
-            $table->foreignID('supplementGabarit_id');
-            $table->foreignID('supplementLocalisation_id');
+            $table->foreignId('supplement_gabarit_id')->nullable()->constained('supplement_gabarits')->onDelete('cascade');
+            $table->foreignId('supplement_localisation_id')->nullable()->constained('supplement_localisations')->onDelete('cascade');
 
 
             $table->timestamps();

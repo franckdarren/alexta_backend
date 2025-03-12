@@ -12,4 +12,6 @@ class SupplementGabarit extends Model
         'type',
         'montant',
     ];
+
+
 }
