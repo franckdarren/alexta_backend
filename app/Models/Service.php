@@ -19,11 +19,5 @@ class Service extends Model
 
 
 
-    public function supplementGabarit(){
-        return $this->belongsTo(SupplementGabarit::class);
-    }
 
-    public function supplementLocalisation(){
-        return $this->belongsTo(SupplementGabarit::class);
-    }
 }

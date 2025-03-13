@@ -19,6 +19,11 @@ return new class extends Migration
             $table->foreignId('service_id')->nullable()->constained('services')->onDelete('cascade');
             $table->foreignId('user_id')->nullable()->constained('users')->onDelete('cascade');
 
+            //les clefs etrangers des supplements
+            $table->foreignId('supplement_gabarit_id')->nullable()->constained('supplement_gabarits')->onDelete('cascade');
+            $table->foreignId('supplement_localisation_id')->nullable()->constained('supplement_localisations')->onDelete('cascade');
+            
+
             $table->timestamps();
         });
     }

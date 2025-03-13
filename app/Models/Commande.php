@@ -26,4 +26,13 @@ class Commande extends Model
     public function service(){
         return $this->belongsTo(Service::class);
     }
+
+
+    public function supplementGabarit(){
+        return $this->belongsTo(SupplementGabarit::class);
+    }
+
+    public function supplementLocalisation(){
+        return $this->belongsTo(SupplementGabarit::class);
+    }
 }
