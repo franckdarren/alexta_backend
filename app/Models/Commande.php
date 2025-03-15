@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Commande extends Model
 {
-    //
+    
+    use HasFactory;
 
 
     protected $fillable = ['status', 'localisation', 'prix_total', 'service_id', 'user_id', 'supplement_gabarit_id', 'supplement_localisation_id'];
