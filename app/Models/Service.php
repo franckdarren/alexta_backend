@@ -12,9 +12,7 @@ class Service extends Model
         'name',
         'description',
         'prix_base',
-        'supplement_gabarit_id',
-        'supplement_localisation_id',
-
+        
     ];
 
 
