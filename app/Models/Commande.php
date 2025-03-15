@@ -9,30 +9,25 @@ class Commande extends Model
     //
 
 
-    protected $fillable = [
-        'status',
-        'localisation',
-        'prix_total',
-        'service_id',
-        'user_id',
+    protected $fillable = ['status', 'localisation', 'prix_total', 'service_id', 'user_id', 'supplement_gabarit_id', 'supplement_localisation_id'];
 
-    ];
-
-
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
-    public function service(){
+    public function service()
+    {
         return $this->belongsTo(Service::class);
     }
 
-
-    public function supplementGabarit(){
+    public function supplementGabarit()
+    {
         return $this->belongsTo(SupplementGabarit::class);
     }
 
-    public function supplementLocalisation(){
-        return $this->belongsTo(SupplementGabarit::class);
+    public function supplementLocalisation()
+    {
+        return $this->belongsTo(SupplementLocalisation::class);
     }
 }
