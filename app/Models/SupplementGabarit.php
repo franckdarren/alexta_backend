@@ -13,5 +13,12 @@ class SupplementGabarit extends Model
         'montant',
     ];
 
+    public function commandes()
+    {
+        return $this->hasMany(Commande::class);
+    }
+
+    
+
 
 }
