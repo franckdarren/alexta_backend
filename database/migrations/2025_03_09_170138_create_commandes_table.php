@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('commandes', function (Blueprint $table) {
             $table->id();
             $table->string('status');
-            $table->string('name');
+            $table->string('localisation');
+            $table->string('prix_total');
             //les clefs etrangers
             $table->foreignId('service_id')->nullable()->constained('services')->onDelete('cascade');
             $table->foreignId('user_id')->nullable()->constained('users')->onDelete('cascade');
