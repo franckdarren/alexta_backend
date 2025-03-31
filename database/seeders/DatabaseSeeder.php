@@ -14,10 +14,22 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // User::factory(10)->create();
+        $this->call(SupplementLocalisationSeeder::class);
+        $this->call(SupplementGabaritSeeder::class);
+        $this->call(ServiceSeeder::class);
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+
+        // $this->call(RoleSeeder::class);
+
+        $admin = User::factory()->create([
+            'name' => 'Jeremie',
+            'email' => 'jeremie@alexta.com',
+            'role' => 'Administrateur',
+            'password' => bcrypt('password'),
         ]);
+        // $admin->assignRole('Administrateur');
+
+
+
     }
 }
