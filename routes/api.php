@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\ServiceController;
+use App\Http\Controllers\API\CommandeController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -30,6 +31,15 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/', [ServiceController::class, 'store']); // Créer un nouveau service
         Route::put('{id}', [ServiceController::class, 'update']); // Mettre à jour un service
         Route::delete('{id}', [ServiceController::class, 'destroy']); // Supprimer un service
+    });
+
+    // Gestion des Commandes
+    Route::prefix('commandes')->group(function () {
+        Route::get('/', [CommandeController::class, 'index']); // Récupérer toutes les commandes
+        Route::get('{id}', [CommandeController::class, 'show']); // Récupérer une commande par son ID
+        Route::post('/', [CommandeController::class, 'store']); // Créer un nouvelle commande
+        Route::put('{id}', [CommandeController::class, 'update']); // Mettre à jour une commande
+        Route::delete('{id}', [CommandeController::class, 'destroy']); // Supprimer une commande
     });
 
 });
