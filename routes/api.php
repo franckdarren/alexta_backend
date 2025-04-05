@@ -6,6 +6,8 @@ use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\ServiceController;
 use App\Http\Controllers\API\CommandeController;
+use App\Http\Controllers\API\SupplementGabaritController;
+use App\Http\Controllers\API\SupplementLocalisationController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -40,6 +42,24 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/', [CommandeController::class, 'store']); // Créer un nouvelle commande
         Route::put('{id}', [CommandeController::class, 'update']); // Mettre à jour une commande
         Route::delete('{id}', [CommandeController::class, 'destroy']); // Supprimer une commande
+    });
+
+    // Gestion des Supplément gabarit
+    Route::prefix('supplement-gabarit')->group(function () {
+        Route::get('/', [SupplementGabaritController::class, 'index']); // Récupérer toutes les supplement-gabarit
+        Route::get('{id}', [SupplementGabaritController::class, 'show']); // Récupérer un supplement-gabarit par son ID
+        Route::post('/', [SupplementGabaritController::class, 'store']); // Créer un nouveau supplement-gabarit
+        Route::put('{id}', [SupplementGabaritController::class, 'update']); // Mettre à jour un supplement-gabarit
+        Route::delete('{id}', [SupplementGabaritController::class, 'destroy']); // Supprimer un supplement-gabarit
+    });
+
+    // Gestion des Supplément localisation
+    Route::prefix('supplement-gabarit')->group(function () {
+        Route::get('/', [SupplementLocalisationController::class, 'index']); // Récupérer toutes les supplement-localisation
+        Route::get('{id}', [SupplementLocalisationController::class, 'show']); // Récupérer un supplement-localisation par son ID
+        Route::post('/', [SupplementLocalisationController::class, 'store']); // Créer un nouveau supplement-localisation
+        Route::put('{id}', [SupplementLocalisationController::class, 'update']); // Mettre à jour un supplement-localisation
+        Route::delete('{id}', [SupplementLocalisationController::class, 'destroy']); // Supprimer un supplement-localisation
     });
 
 });
