@@ -1,0 +1,1439 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API AlexTa",
+        "description": "Documentation de l'API de l'application AlexTa",
+        "contact": {
+            "email": "support@alexta.com"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://my-default-host.com",
+            "description": "Serveur local"
+        }
+    ],
+    "paths": {
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "Authentification"
+                ],
+                "summary": "Connexion utilisateur",
+                "operationId": "44212a9096e4b09358281e9ec8a0701d",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "user@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "secret123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Connexion réussie",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Login successful"
+                                        },
+                                        "user": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "John Doe"
+                                                },
+                                                "email": {
+                                                    "type": "string",
+                                                    "example": "user@example.com"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "token": {
+                                            "type": "string",
+                                            "example": "1|XyzABC123TokenSanctum"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Identifiants incorrects",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Email ou mot de passe incorrect"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/commandes": {
+            "get": {
+                "tags": [
+                    "Commandes"
+                ],
+                "summary": "Afficher toutes les commandes",
+                "operationId": "bdaf49272df4c42d1189dcc85f199751",
+                "responses": {
+                    "200": {
+                        "description": "Liste des commandes",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Commande"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Commandes"
+                ],
+                "summary": "Créer une nouvelle commande",
+                "operationId": "1660514235819d5068a78927af5680f7",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "status",
+                                    "localisation",
+                                    "prix_total"
+                                ],
+                                "properties": {
+                                    "status": {
+                                        "type": "string",
+                                        "example": "en attente"
+                                    },
+                                    "localisation": {
+                                        "type": "string",
+                                        "example": "Libreville, Akanda"
+                                    },
+                                    "prix_total": {
+                                        "type": "string",
+                                        "example": "15000"
+                                    },
+                                    "service_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "user_id": {
+                                        "type": "integer",
+                                        "example": 2
+                                    },
+                                    "supplement_gabarit_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "supplement_localisation_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Commande créée avec succès",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Commande créée avec succès."
+                                        },
+                                        "commande": {
+                                            "$ref": "#/components/schemas/Commande"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/commandes/{id}": {
+            "get": {
+                "tags": [
+                    "Commandes"
+                ],
+                "summary": "Afficher une commande spécifique",
+                "operationId": "278d5bc14ad859b52a3edfbc0cf7c58e",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la commande",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Détails de la commande",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Commande"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Commande non trouvée"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Commandes"
+                ],
+                "summary": "Mettre à jour une commande",
+                "operationId": "fd9feaee0cfea5a951f23ed6442a73c0",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la commande à mettre à jour",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "status": {
+                                        "type": "string",
+                                        "example": "livrée"
+                                    },
+                                    "localisation": {
+                                        "type": "string",
+                                        "example": "Owendo"
+                                    },
+                                    "prix_total": {
+                                        "type": "string",
+                                        "example": "17000"
+                                    },
+                                    "service_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "user_id": {
+                                        "type": "integer",
+                                        "example": 2
+                                    },
+                                    "supplement_gabarit_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "supplement_localisation_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Commande mise à jour avec succès",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Commande mise à jour avec succès."
+                                        },
+                                        "commande": {
+                                            "$ref": "#/components/schemas/Commande"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Commande non trouvée"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Commandes"
+                ],
+                "summary": "Supprimer une commande",
+                "operationId": "5ea958f0dab851763a76cff3e8743513",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la commande à supprimer",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Commande supprimée avec succès",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Commande supprimée avec succès."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Commande non trouvée"
+                    }
+                }
+            }
+        },
+        "/api/services": {
+            "get": {
+                "tags": [
+                    "Services"
+                ],
+                "summary": "Afficher tous les services",
+                "operationId": "7cb57dfc3dc68b14a0f32724289e41ab",
+                "responses": {
+                    "200": {
+                        "description": "Liste des services",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Service"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Erreur interne du serveur"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Services"
+                ],
+                "summary": "Créer un nouveau service",
+                "operationId": "3e8b727613956c5d5c799f36a03d9744",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nom",
+                                    "description",
+                                    "prix_base"
+                                ],
+                                "properties": {
+                                    "nom": {
+                                        "type": "string",
+                                        "example": "Service de nettoyage"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Service de nettoyage à domicile"
+                                    },
+                                    "prix_base": {
+                                        "type": "integer",
+                                        "example": 2000
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Service créé avec succès",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Service"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Données invalides"
+                    }
+                }
+            }
+        },
+        "/api/services/{id}": {
+            "get": {
+                "tags": [
+                    "Services"
+                ],
+                "summary": "Afficher un service spécifique",
+                "operationId": "622276216d52485a66342fd85758729b",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID du service",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Service trouvé",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Service"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Service non trouvé"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Services"
+                ],
+                "summary": "Mettre à jour un service",
+                "operationId": "1a3c89f696dae63c58a24d82f7bd8d4b",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID du service",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "nom": {
+                                        "type": "string",
+                                        "example": "Service de nettoyage amélioré"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Service de nettoyage à domicile amélioré"
+                                    },
+                                    "prix_base": {
+                                        "type": "integer",
+                                        "example": 2500
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Service mis à jour avec succès",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Service"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Service non trouvé"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Services"
+                ],
+                "summary": "Supprimer un service",
+                "operationId": "93062533d59d2aafc36847df720ebbdf",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID du service",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Service supprimé avec succès"
+                    },
+                    "404": {
+                        "description": "Service non trouvé"
+                    }
+                }
+            }
+        },
+        "/api/supplements": {
+            "get": {
+                "tags": [
+                    "SupplementGabarit"
+                ],
+                "summary": "Afficher tous les suppléments gabarits",
+                "operationId": "b0075909b7ad106cd5a8539fc0eed592",
+                "responses": {
+                    "200": {
+                        "description": "Liste des suppléments gabarits",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/SupplementGabarit"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Erreur interne du serveur"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "SupplementGabarit"
+                ],
+                "summary": "Créer un supplément gabarit",
+                "operationId": "626a203e5095fa24a4f70b7180b4e3dc",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "type",
+                                    "montant"
+                                ],
+                                "properties": {
+                                    "type": {
+                                        "type": "string",
+                                        "example": "Type B"
+                                    },
+                                    "montant": {
+                                        "type": "integer",
+                                        "example": 150
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Supplément gabarit créé avec succès",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SupplementGabarit"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Données invalides"
+                    }
+                }
+            }
+        },
+        "/api/supplements/{id}": {
+            "get": {
+                "tags": [
+                    "SupplementGabarit"
+                ],
+                "summary": "Afficher un supplément gabarit spécifique",
+                "operationId": "5866e6b6b9ab5d33af04af70acce02bd",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID du supplément gabarit",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Supplément gabarit trouvé",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SupplementGabarit"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Supplément gabarit non trouvé"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "SupplementGabarit"
+                ],
+                "summary": "Mettre à jour un supplément gabarit",
+                "operationId": "4f2d179902b86feff8e051088209f80e",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID du supplément gabarit",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "type": {
+                                        "type": "string",
+                                        "example": "Type C"
+                                    },
+                                    "montant": {
+                                        "type": "integer",
+                                        "example": 200
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Supplément gabarit mis à jour avec succès",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SupplementGabarit"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Supplément gabarit non trouvé"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "SupplementGabarit"
+                ],
+                "summary": "Supprimer un supplément gabarit",
+                "operationId": "d85f3ed541c657c37d7a046cd46de706",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID du supplément gabarit",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Supplément gabarit supprimé avec succès"
+                    },
+                    "404": {
+                        "description": "Supplément gabarit non trouvé"
+                    }
+                }
+            }
+        },
+        "/api/supplements-localisation": {
+            "get": {
+                "tags": [
+                    "SupplementLocalisation"
+                ],
+                "summary": "Afficher tous les suppléments de localisation",
+                "operationId": "3cfabb447edc04a44935f2c276e3f55c",
+                "responses": {
+                    "200": {
+                        "description": "Liste des suppléments de localisation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/SupplementLocalisation"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Erreur interne du serveur"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "SupplementLocalisation"
+                ],
+                "summary": "Créer un supplément de localisation",
+                "operationId": "95201242da1c3ab2b624bb092d2fd3df",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "lieu",
+                                    "montant"
+                                ],
+                                "properties": {
+                                    "lieu": {
+                                        "type": "string",
+                                        "example": "Paris"
+                                    },
+                                    "montant": {
+                                        "type": "integer",
+                                        "example": 15000
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Supplément de localisation créé avec succès",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SupplementLocalisation"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Données invalides"
+                    }
+                }
+            }
+        },
+        "/api/supplements-localisation/{id}": {
+            "get": {
+                "tags": [
+                    "SupplementLocalisation"
+                ],
+                "summary": "Afficher un supplément de localisation spécifique",
+                "operationId": "5872601ab7aa2b8d77ba011bc1246810",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID du supplément de localisation",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Supplément de localisation trouvé",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SupplementLocalisation"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Supplément de localisation non trouvé"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "SupplementLocalisation"
+                ],
+                "summary": "Mettre à jour un supplément de localisation",
+                "operationId": "2a893f8a7c28fa14a05992f2e93705ec",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID du supplément de localisation",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "lieu": {
+                                        "type": "string",
+                                        "example": "Lyon"
+                                    },
+                                    "montant": {
+                                        "type": "integer",
+                                        "example": 20000
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Supplément de localisation mis à jour avec succès",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SupplementLocalisation"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Supplément de localisation non trouvé"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "SupplementLocalisation"
+                ],
+                "summary": "Supprimer un supplément de localisation",
+                "operationId": "6980c203b4fad125c36fd63c6fa4332a",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID du supplément de localisation",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Supplément de localisation supprimé avec succès"
+                    },
+                    "404": {
+                        "description": "Supplément de localisation non trouvé"
+                    }
+                }
+            }
+        },
+        "/api/users": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Lister tous les utilisateurs",
+                "operationId": "d7a57f4d7de18fb0f92501172472c9b6",
+                "responses": {
+                    "200": {
+                        "description": "Liste des utilisateurs",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/User"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Erreur serveur"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Créer un nouvel utilisateur",
+                "operationId": "9fea6f2adcb69614c521a7733358382d",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nom",
+                                    "email",
+                                    "role",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "nom": {
+                                        "type": "string",
+                                        "example": "John Doe"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "example": "john.doe@example.com"
+                                    },
+                                    "role": {
+                                        "type": "string",
+                                        "example": "Client"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "password123"
+                                    },
+                                    "telephone": {
+                                        "type": "string",
+                                        "example": "123456789"
+                                    },
+                                    "adresse": {
+                                        "type": "string",
+                                        "example": "123 rue de Paris"
+                                    },
+                                    "zone_intervention": {
+                                        "type": "string",
+                                        "example": "Paris"
+                                    },
+                                    "ajoute_par": {
+                                        "type": "string",
+                                        "example": "admin"
+                                    },
+                                    "team": {
+                                        "type": "string",
+                                        "example": "Equipe 1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Utilisateur créé avec succès",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Données invalides"
+                    }
+                }
+            }
+        },
+        "/api/users/{id}": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Afficher un utilisateur spécifique",
+                "operationId": "40a5104e23b52137e78c3d3ac48b88a8",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de l'utilisateur",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Utilisateur trouvé",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Utilisateur non trouvé"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Mettre à jour un utilisateur",
+                "operationId": "b166772cec9714067040e77cf14beeba",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de l'utilisateur",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "nom": {
+                                        "type": "string",
+                                        "example": "John Smith"
+                                    },
+                                    "role": {
+                                        "type": "string",
+                                        "example": "Superviseur"
+                                    },
+                                    "telephone": {
+                                        "type": "string",
+                                        "example": "987654321"
+                                    },
+                                    "adresse": {
+                                        "type": "string",
+                                        "example": "456 rue de Paris"
+                                    },
+                                    "zone_intervention": {
+                                        "type": "string",
+                                        "example": "Lyon"
+                                    },
+                                    "disponibilite": {
+                                        "type": "boolean",
+                                        "example": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Utilisateur mis à jour",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Utilisateur non trouvé"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Supprimer un utilisateur",
+                "operationId": "ce06860a51ab016ef66e753544fe4563",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de l'utilisateur",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Utilisateur supprimé avec succès"
+                    },
+                    "404": {
+                        "description": "Utilisateur non trouvé"
+                    }
+                }
+            }
+        },
+        "/api/users/{id}/commandes": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Afficher les commandes d'un utilisateur",
+                "operationId": "7589f960f9496d864b8f7f3a2262c2d6",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de l'utilisateur",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Liste des commandes de l'utilisateur",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Utilisateur non trouvé"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Commande": {
+                "title": "Commande",
+                "required": [
+                    "status",
+                    "localisation",
+                    "prix_total"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "status": {
+                        "type": "string",
+                        "example": "en attente"
+                    },
+                    "localisation": {
+                        "type": "string",
+                        "example": "Libreville"
+                    },
+                    "prix_total": {
+                        "type": "string",
+                        "example": "15000"
+                    },
+                    "service_id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "user_id": {
+                        "type": "integer",
+                        "example": 2
+                    },
+                    "supplement_gabarit_id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "supplement_localisation_id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "Service": {
+                "title": "Service",
+                "required": [
+                    "nom",
+                    "description",
+                    "prix_base"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "nom": {
+                        "type": "string",
+                        "example": "Service de transport"
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "Service de transport rapide"
+                    },
+                    "prix_base": {
+                        "type": "integer",
+                        "example": 1500
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "SupplementGabarit": {
+                "title": "Supplement Gabarit",
+                "required": [
+                    "type",
+                    "montant"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "type": {
+                        "type": "string",
+                        "example": "Type A"
+                    },
+                    "montant": {
+                        "type": "integer",
+                        "example": 100
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "SupplementLocalisation": {
+                "title": "Supplement Localisation",
+                "required": [
+                    "lieu",
+                    "montant"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "lieu": {
+                        "type": "string",
+                        "example": "Libreville"
+                    },
+                    "montant": {
+                        "type": "integer",
+                        "example": 5000
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "User": {
+                "title": "Utilisateur",
+                "required": [
+                    "nom",
+                    "email",
+                    "role",
+                    "password"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "nom": {
+                        "type": "string",
+                        "example": "John Doe"
+                    },
+                    "email": {
+                        "type": "string",
+                        "example": "john.doe@example.com"
+                    },
+                    "role": {
+                        "type": "string",
+                        "example": "Client"
+                    },
+                    "telephone": {
+                        "type": "string",
+                        "example": "123456789"
+                    },
+                    "adresse": {
+                        "type": "string",
+                        "example": "123 rue de Paris"
+                    },
+                    "zone_intervention": {
+                        "type": "string",
+                        "example": "Paris"
+                    },
+                    "disponibilite": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "ajoute_par": {
+                        "type": "string",
+                        "example": "admin"
+                    },
+                    "team": {
+                        "type": "string",
+                        "example": "Equipe 1"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Authentification",
+            "description": "Authentification"
+        },
+        {
+            "name": "Commandes",
+            "description": "Commandes"
+        },
+        {
+            "name": "Services",
+            "description": "Services"
+        },
+        {
+            "name": "SupplementGabarit",
+            "description": "SupplementGabarit"
+        },
+        {
+            "name": "SupplementLocalisation",
+            "description": "SupplementLocalisation"
+        },
+        {
+            "name": "User",
+            "description": "User"
+        }
+    ]
+}
